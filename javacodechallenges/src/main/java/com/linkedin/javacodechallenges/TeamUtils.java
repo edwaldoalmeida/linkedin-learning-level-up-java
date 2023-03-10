@@ -33,56 +33,46 @@ public class TeamUtils {
     } else {
       orderedResults.putAll(results);
       System.out.println("Now for the results, the WINNER is...");
-
-      // check the winner(s) and print the results in order
-//      boolean firstResult = true;
-//      for (Team team: orderedResults.keySet()){
-//        if (firstResult) {
-//          System.out.println("With " + team.sumTotalScore() + " points, it's team " + team.getPlayer1() + " and " + team.getPlayer2() + "!\n");
-//          firstResult = false;
-//        } else {
-//          System.out.println("Then we have... ");
-//          System.out.println("With " + team.sumTotalScore() + " points, it's team " + team.getPlayer1() + " and " + team.getPlayer2() + "!\n");
-//        }
-//      }
-
-      // check the winners (new approach)
       Iterator<Map.Entry<Team, Integer>> iterator = orderedResults.entrySet().iterator();
-      // TODO: include a while i < something.lenght() - 2 ???
-      int i = 0;
       Map.Entry<Team, Integer> currentEntry = null;
       Map.Entry<Team, Integer> nextEntry = null;
-      while (i <= orderedResults.size()) {
-        if (iterator.hasNext()) {
-          currentEntry = iterator.next();
+      currentEntry = iterator.next();  // gets the 1st position
+      nextEntry = iterator.next(); // gets the 2nd position
+
+      // if it's a TIE: print `current` and `next` (then current = iterator.next() and `next` = iterator.next())
+      while (currentEntry != null) {
+        if (nextEntry != null && currentEntry.getKey().sumTotalScore() == nextEntry.getKey().sumTotalScore()) {
+          System.out.println("It's a TIE!");
+          System.out.println("With " + currentEntry.getKey().sumTotalScore() + " points, it's team " +
+                  currentEntry.getKey().getPlayer1() + " and " +
+                  currentEntry.getKey().getPlayer2() + "!");
+          System.out.println("With " + nextEntry.getKey().sumTotalScore() + " points, it's team " +
+                  nextEntry.getKey().getPlayer1() + " and " +
+                  nextEntry.getKey().getPlayer2() + "!\n");
+          if (iterator.hasNext()) {
+            currentEntry = iterator.next();
+          } else {
+            currentEntry = null;
+          }
           if (iterator.hasNext()) {
             nextEntry = iterator.next();
-            // if it's a TIE, print the current and next together:
-            if (currentEntry.getKey().sumTotalScore() == nextEntry.getKey().sumTotalScore()) {
-              System.out.println("It's a TIE!");
-              System.out.println("With " + currentEntry.getKey().sumTotalScore() + " points, it's team " +
-                      currentEntry.getKey().getPlayer1() + " and " +
-                      currentEntry.getKey().getPlayer2() + "!");
-              System.out.println("With " + nextEntry.getKey().sumTotalScore() + " points, it's team " +
-                      nextEntry.getKey().getPlayer1() + " and " +
-                      nextEntry.getKey().getPlayer2() + "!\n");
-            } else { // print only the current and let the execution go
-              System.out.println("With " + currentEntry.getKey().sumTotalScore() + " points, it's team " +
-                      currentEntry.getKey().getPlayer1() + " and " +
-                      currentEntry.getKey().getPlayer2() + "!\n");
-              System.out.println("Then we have... ");
-              System.out.println("With " + nextEntry.getKey().sumTotalScore() + " points, it's team " +
-                      nextEntry.getKey().getPlayer1() + " and " +
-                      nextEntry.getKey().getPlayer2() + "!\n");
-            }
-            System.out.println("Then we have... ");
           } else {
-            System.out.println("With " + currentEntry.getKey().sumTotalScore() + " points, it's team " +
-                    currentEntry.getKey().getPlayer1() + " and " +
-                    currentEntry.getKey().getPlayer2() + "!\n");
+            nextEntry = null;
+          }
+        } else { // if it's not a TIE: print only the current (then current = next and next = iterator.next()
+          System.out.println("With " + currentEntry.getKey().sumTotalScore() + " points, it's team " +
+                  currentEntry.getKey().getPlayer1() + " and " +
+                  currentEntry.getKey().getPlayer2() + "!\n");
+          currentEntry = nextEntry;  // gest the 2nd position from the `nextEntry`
+          if (iterator.hasNext()) {
+            nextEntry = iterator.next();  // gets the 3rd position
+          } else {
+            nextEntry = null;
           }
         }
-        i += 1;
+        if (currentEntry != null) {
+          System.out.println("Then we have... ");
+        }
       }
     }
   }

@@ -159,8 +159,8 @@ public class TeamUtilsTest {
         "\n" +
         "Then we have... \n" +
         "It's a TIE!\n" +
-        "With 10 points, it's team Eric and Rebecca!\n" +
         "With 10 points, it's team Tony and Shannon!\n" +
+        "With 10 points, it's team Eric and Rebecca!\n" +
         "\n", printOut.toString());
   }
 }
