@@ -12,40 +12,44 @@ import java.net.URL;
  *
  */
 public class App {
-    public static void main(String[] args) {
-        // TODO: Call https://icanhazdadjoke.com/ API and display joke
 
+    public static StringBuilder getJoke (String url) {
+        StringBuilder response = new StringBuilder();
         try {
-            URL url = new URL("https://icanhazdadjoke.com/");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            URL _url = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) _url.openConnection();
             con.setRequestMethod("GET");
-
-            // Set the Accept header to "application/json"
             con.setRequestProperty("Accept", "application/json");
 
             // Reading response from the API
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
-
-            // Parsing JSON response
-//            JSONObject jsonObject = new JSONObject(response.toString());  // usual way of doing .toString()
-            JSONObject jsonObject = new JSONObject(String.valueOf(response)); // another way of doing .toString()
-            String id = jsonObject.getString("id");
-            String joke = jsonObject.getString("joke");
-            int status = jsonObject.getInt("status");
-
-            // Printing parsed values
-            System.out.println("ID: " + id);
-            System.out.println("Joke: " + joke);
-            System.out.println("Status: " + status);
-
         } catch (Exception e) {
             System.out.println("Something went wrong when trying to get a joke: " + e.getMessage());
         }
+        return response;
+    }
+
+    public static Joke parseJoke(StringBuilder responseBody) {
+//        JSONObject jsonObject = new JSONObject(response.toString());  // usual way of doing .toString()
+        JSONObject jsonObject = new JSONObject(String.valueOf(responseBody)); // another way of doing .toString()
+        String id = jsonObject.getString("id");
+        String joke = jsonObject.getString("joke");
+        int status = jsonObject.getInt("status");
+        Joke _jokeObj = new Joke(jsonObject.getString("id"), jsonObject.getString("joke"), jsonObject.getInt("status"));
+        return _jokeObj;
+    }
+
+    public static void main(String[] args) {
+        // TODO: Call https://icanhazdadjoke.com/ API and display joke
+
+        StringBuilder response = getJoke("https://icanhazdadjoke.com/");
+        Joke jokeObj = parseJoke(response);
+        System.out.println(jokeObj);
+
     }
 }
