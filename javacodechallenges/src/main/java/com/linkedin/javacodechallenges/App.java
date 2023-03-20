@@ -24,7 +24,6 @@ public class App {
             con.setRequestProperty("Accept", "application/json");
 
             // Reading response from the API
-//            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
@@ -34,7 +33,7 @@ public class App {
             in.close();
 
             // Parsing JSON response
-//            JSONObject jsonObject = new JSONObject(response.toString());
+//            JSONObject jsonObject = new JSONObject(response.toString());  // usual way of doing .toString()
             JSONObject jsonObject = new JSONObject(String.valueOf(response)); // another way of doing .toString()
             String id = jsonObject.getString("id");
             String joke = jsonObject.getString("joke");
@@ -44,8 +43,9 @@ public class App {
             System.out.println("ID: " + id);
             System.out.println("Joke: " + joke);
             System.out.println("Status: " + status);
+
         } catch (Exception e) {
-            System.out.println("Error fetching API: " + e.getMessage());
+            System.out.println("Something went wrong when trying to get a joke: " + e.getMessage());
         }
     }
 }
