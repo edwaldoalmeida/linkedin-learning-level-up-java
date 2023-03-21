@@ -30,8 +30,7 @@ public class App {
         var client = HttpClient.newHttpClient();
 
         // Create a request
-        var request = HttpRequest.newBuilder(
-                URI.create("https://icanhazdadjoke.com/"))
+        var request = HttpRequest.newBuilder(URI.create("https://icanhazdadjoke.com/"))
                 .header("accept", "application/json")
                 .build();
 
