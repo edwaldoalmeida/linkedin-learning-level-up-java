@@ -7,10 +7,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Hello world!
- *
- */
 public class App {
 
     public static StringBuilder getJoke (String url) {
