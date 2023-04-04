@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class App 
 {
-    public static void redactTextFile(String fileName,
-                                      String[] redactedWordsArray) {
+    public static void redactTextFile(String fileName, String[] redactedWordsArray) {
 
     }
 
@@ -13,8 +12,7 @@ public class App
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("What file would you like to " +
-                "redact information from?");
+        System.out.println("What file would you like to " + "redact information from?");
         String fileName = scanner.nextLine();
 
         System.out.println("What words would you like to redact? " +
