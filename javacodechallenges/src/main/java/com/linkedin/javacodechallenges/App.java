@@ -11,8 +11,7 @@ import java.util.Scanner;
 import org.apache.commons.lang3.StringUtils;
 
 public class App {
-    public static void redactTextFile(String fileName,
-            String[] redactedWordsArray) {
+    public static void redactTextFile(String fileName, String[] redactedWordsArray) {
         if (!fileName.contains(".txt")) {
             System.out.println("This is not a text file.");
             return;
@@ -20,12 +19,12 @@ public class App {
 
         try {
             File originalFile = new File(fileName);
-            BufferedReader originalFileReader = new BufferedReader(new FileReader(originalFile));
+            String absolutePathOriginalFile = new File(fileName).getAbsolutePath();
+            BufferedReader originalFileReader = new BufferedReader(new FileReader(absolutePathOriginalFile));
 
-            File redactedFile = new File("redacted-" +
-                    fileName);
-            BufferedWriter redactedFileWriter = new BufferedWriter(
-                    new FileWriter(redactedFile));
+            File redactedFile = new File("redacted-" + fileName);
+            String absolutePathRedactedFile = new File("redacted-" + fileName).getAbsolutePath();
+            BufferedWriter redactedFileWriter = new BufferedWriter(new FileWriter(absolutePathRedactedFile));
 
             String currentLine = originalFileReader.readLine();
 
@@ -44,8 +43,7 @@ public class App {
             redactedFileWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Trouble reading or writing to file"
-                    + e);
+            System.out.println("Trouble reading or writing to file" + e);
         }
     }
 
