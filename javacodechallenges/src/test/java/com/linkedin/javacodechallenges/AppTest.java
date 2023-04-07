@@ -1,20 +1,22 @@
 package com.linkedin.javacodechallenges;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AppTest {
 
@@ -38,6 +40,12 @@ public class AppTest {
         @Test
         public void redactTextFile_ensureRedaction() {
 
+                String originalFilename = "sample.txt";
+                Path path = Paths.get("sample.txt");
+                if (!Files.exists(path)) {
+                        fail("Test failed because the file " + originalFilename + " wasn't found.");
+                }
+
                 try {
                         App.redactTextFile("sample.txt", new String[] { "sally", "Kat", "ready to go" });
 
@@ -56,6 +64,12 @@ public class AppTest {
 
         @Test
         public void redactTextFile_ensureSameRemainingContents() {
+
+                String originalFilename = "sample.txt";
+                Path path = Paths.get("sample.txt");
+                if (!Files.exists(path)) {
+                        fail("Test failed because the file " + originalFilename + " wasn't found.");
+                }
 
                 try {
 
@@ -84,6 +98,8 @@ public class AppTest {
 //                                        System.out.println("ERROR");
 //                                }
 //                        });
+
+                        // to improve debugging
                         for (String line : redactedLines) {
                                 try {
                                         assertEquals(line, redactedFileReader.readLine());
@@ -99,6 +115,12 @@ public class AppTest {
 
         @Test
         public void redactTextFile_ensureSameNumberOfLines() {
+
+                String originalFilename = "sample.txt";
+                Path path = Paths.get("sample.txt");
+                if (!Files.exists(path)) {
+                        fail("Test failed because the file " + originalFilename + " wasn't found.");
+                }
 
                 try {
                         App.redactTextFile("sample.txt",new String[] { "sally", "Kat" });
